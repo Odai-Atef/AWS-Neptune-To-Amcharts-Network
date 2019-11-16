@@ -1,72 +1,313 @@
 import json
 
-def parse_csv(str):
-    obj=[]
-    rows=str.splitlines()
-    for row in rows:
-        obj.append([column.strip() for column in row.split(',')])
-    return obj
-
-
-df_edges=parse_csv("""IN3438,AEDFXA14NUL7,US48242W1062,supplies,1.48545599,2.23171711,16.889636,COGS
-MA1606,AEDFXA14NUL7,NL0010558797,supplies,0.000001,12.89999962,29.659518,NaN
-EN1024,AN8068571086,SE0000825820,supplies,4.60759306,0.145832002,11.929058,CAPEX
-EN1035,AN8068571086,US1270971039,supplies,5.542761803,0.176332995,14.424039,CAPEX
-EN1116,AN8068571086,AU000000STO6,supplies,4.476929188,0.075254001,6.155777,CAPEX
-EN1127,AN8068571086,CA2925051047,supplies,4.429931164,0.283234,23.16854,CAPEX
-EN1146,AN8068571086,HU0000153937,supplies,4.265926838,0.162374005,13.282193,CAPEX
-EN116,AN8068571086,CNE1000002Q2,supplies,1.437150002,0.402038008,32.886708,CAPEX
-EN123,AN8068571086,BRPETRACNPR6,supplies,2.696135044,1.164589047,95.263376,CAPEX
-EN1298,AN8068571086,JP3142500002,supplies,4.533432007,0.113710999,9.30156,CAPEX
-EN1307,AN8068571086,US1717981013,supplies,5.663022041,0.359721005,29.425178,CAPEX
-EN1341,AN8068571086,US7018771029,supplies,5.632225037,0.389046997,31.824044,CAPEX
-EN1346,AN8068571086,ARP9897X1319,supplies,3.965898037,0.371583015,30.852536,CAPEX
-EN1357,AN8068571086,US98212B1035,supplies,4.806471825,0.209768996,17.159104,CAPEX
-EN1382,AN8068571086,CH0048265513,supplies,1.711424947,0.135574996,11.090035,COGS
-EN1393,AN8068571086,US1651671075,supplies,5.708356857,0.391490012,32.023882,CAPEX
-EN143,AN8068571086,HK0883013259,supplies,5.708349228,1.233718038,100.918128,CAPEX
-EN1434,AN8068571086,US6267171022,supplies,5.708363056,0.169724002,13.883423,CAPEX
-EN1482,AN8068571086,GB0001500809,supplies,5.708267212,0.0328,2.685739,CAPEX
-EN163,AN8068571086,NO0010096985,supplies,9.476752281,3.114989996,254.806176,CAPEX
-EN1642,AN8068571086,INE274J01014,supplies,4.5640769,0.0577,4.717979,CAPEX
-EN1669,AN8068571086,US9663874090,supplies,5.708350182,0.230632007,18.865698,CAPEX
-EN1698,AN8068571086,CA81783Q1054,supplies,5.708352089,0.191220999,15.641878,CAPEX
-EN1738,AN8068571086,US87968A1043,supplies,5.21539402,0.0018,0.149786,CAPEX
-EN1748,AN8068571086,US5764852050,supplies,5.708350182,0.507777989,41.53624,CAPEX
-EN1766,AN8068571086,CA2927661025,supplies,5.70833683,0.112519003,9.204054,CAPEX
-EN1817,AN8068571086,US74733V1008,supplies,5.708342075,0.189115003,15.469607,CAPEX
-EN1834,AN8068571086,INE103A01014,supplies,5.708390236,0.029,2.370155,CAPEX
-EN1956,AN8068571086,US67011P1003,supplies,0.349651009,0.028,2.286719,COGS
-EN197,AN8068571086,US20825C1045,supplies,2.854172945,0.400474012,32.758772,CAPEX
-EN1982,AN8068571086,US55345K1034,supplies,1.711421967,0.188088998,15.38568,COGS
-EN2132,AN8068571086,GB00B580MF54,supplies,4.566649914,0.0381,3.114044,CAPEX
-EN2156,AN8068571086,GB00B43G0577,supplies,5.708374977,0.057328001,4.68943,CAPEX
-EN218,AN8068571086,RU000A0J2Q06,supplies,1.115432024,0.472458005,38.647064,CAPEX
-EN2195,AN8068571086,BMG7998G1069,supplies,1.71141696,0.0743,6.075531,COGS
-EN2212,AN8068571086,NGSEPLAT0008,supplies,4.151500225,0.000053,0.004401,CAPEX
-EN2232,AN8068571086,CNE100001153,supplies,4.568275928,0.00125,0.101923,CAPEX
-EN2297,AN8068571086,US5168061068,supplies,3.391398907,0.0824,6.74261,CAPEX
-EN2305,AN8068571086,US2057683029,supplies,5.708365917,0.0827,6.768296,CAPEX
-EN234,AN8068571086,RU0009024277,supplies,9.590025902,1.993886948,163.099952,CAPEX
-EN25,AN8068571086,CNE1000003W8,supplies,0.878443003,0.727088988,59.47588,CAPEX
-EN257,AN8068571086,IT0003132476,supplies,3.341377974,1.084434986,88.706784,CAPEX
-EN318,AN8068571086,RU0007661625,supplies,1.906288981,1.330062985,108.785856,CAPEX
-EN355,AN8068571086,CA8672241079,supplies,2.825206995,0.464567006,38.573,CAPEX
-EN380,AN8068571086,US6745991058,supplies,4.465123177,0.984183013,80.506168,CAPEX
-EN401,AN8068571086,COC04PA00016,supplies,2.671488047,0.28193,23.408648,CAPEX
-EN50,AN8068571086,GB0007980591,supplies,3.42501092,1.733649969,141.812576,CAPEX
-EN534,AN8068571086,CA1363851017,supplies,1.319146991,0.174685001,14.289233,CAPEX
-EN559,AN8068571086,INE213A01029,supplies,5.708350182,0.791527987,64.746992,CAPEX
-EN6,AN8068571086,US1667641005,supplies,1.710186005,0.700591028,57.308344,CAPEX""")
 
 
 
+df_edges="""{
+	"message": "",
+	"code": 200,
+	"attributes": {
+		"@type": "g:Map",
+		"@value": []
+	},
+	"result": {
+		"data": {
+			"@type": "g:List",
+			"@value": [{
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "CS769",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "GB0008847096",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "CS1131",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "US5010441013",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "CS1254",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "FR0000120172",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "CS1920",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "DE000BFB0019",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "CS2094",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "FR0000125585",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "CD1233",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "US0865161014",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "CD1282",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "CNE000001KF2",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "IT84",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "KR7005930003",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "IT842",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "US2855121099",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}, {
+				"@type": "g:Path",
+				"@value": {
+					"labels": {
+						"@type": "g:List",
+						"@value": [{
+							"@type": "g:Set",
+							"@value": []
+						}, {
+							"@type": "g:Set",
+							"@value": []
+						}]
+					},
+					"objects": {
+						"@type": "g:List",
+						"@value": ["Apple Inc", {
+							"@type": "g:Edge",
+							"@value": {
+								"id": "IT1347",
+								"label": "supplies",
+								"inVLabel": "company",
+								"outVLabel": "company",
+								"inV": "US12514G1085",
+								"outV": "US0378331005"
+							}
+						}]
+					}
+				}
+			}]
+		},
+		"meta": {
+			"@type": "g:Map",
+			"@value": []
+		}
+	}
+}"""
 
-def lambda_handler(event, context):    
+def generate_amcharts_json(df):
     json_network={}
-    for row in df_edges:
-        key_from=row[1]
-        key_to=row[2]
+    
+    for obj in df['result']['data']["@value"]:
+        key_from=obj["@value"]['objects']["@value"][1]["@value"]['outV']
+        key_to=obj["@value"]['objects']["@value"][1]["@value"]['inV']
         if key_from not in json_network:
             json_network[key_from]={'name':key_from,'linkWith':[],"value":5}
         if key_to not in json_network:
@@ -75,3 +316,8 @@ def lambda_handler(event, context):
     return {"data":list(json_network.values())}
 
 
+def lambda_handler(event, context):
+    return generate_amcharts_json(json.loads(df_edges))
+
+
+print(lambda_handler("",""))
